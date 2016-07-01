@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 
 /*
  * Driver class
@@ -6,12 +8,20 @@ public class AES {
 
 	
 	public static void main(String[] args){
-		int array[][] = Utility.example_array;
+		int array[][] = Examples.example_array;
 		
-		Utility.printBytes(array);
+		Utility.printArray(array);
+		Utility.xor(Examples.example_array, Examples.example_key);
+		Utility.printArray(array);
 		
 		array = Utility.subBytes(array);
-		Utility.printBytes(array);
+		Utility.printArray(array);
+		
+		array = Utility.shiftRows(array);
+		Utility.printArray(array);
+		
+		array = Utility.mixColumns(array);
+		Utility.printArray(array);
 	}
 }
 
