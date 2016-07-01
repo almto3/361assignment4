@@ -13,54 +13,74 @@ public class Utility{
 		return array;
 	}
 	
-	public static int[][] subBytes(int[][] array){
-		System.out.println("subBytes");
+	public static int[][] subBytes(int[][] array, boolean encryption){
+		System.out.println("subBytes, inverse = " + !encryption);
 		int x = 0;
 		int y = 0;
+		String s = "";
 		for(int i = 0; i < array.length; i++)
-			for(int j = 0; j< array[i].length; j++){
-				String s = Integer.toHexString(array[i][j]);
-				
-				if(s.length() == 2){
-					//System.out.println("s = " + s + " " + s.length());
-					x = Integer.parseInt( s.substring(0, 1), 16);
-					y = Integer.parseInt( s.substring(1, 2), 16);
-				}
-				else if(s.length() == 1){
-					x = 0;
-					y = Integer.parseInt( s.substring(0, 1), 16);
-				}
-				else{
-					x = 0;
-					y = 0;
-				}
-				array[i][j] = Examples.sbox[x][y];
-			}
+			for(int j = 0; j< array[i].length; j++)
+				array[i][j] = subBytesHelper(array[i][j], encryption);
 		
 		return array;
 	}
-	public static int[][] shiftRows(int[][] array){
-		System.out.println("shiftRows");
+	public static int subBytesHelper(int a, boolean encryption){
+		String s = Integer.toHexString(a);
+		int x = 0;
+		int y = 0;
+		
+		if(s.length() == 2){
+			x = Integer.parseInt( s.substring(0, 1), 16);
+			y = Integer.parseInt( s.substring(1, 2), 16);
+		}
+		else if(s.length() == 1){
+			x = 0;
+			y = Integer.parseInt( s.substring(0, 1), 16);
+		}
+		else{
+			x = 0;
+			y = 0;
+		}	
+		if(encryption)
+			return Examples.sbox[x][y];
+		return Examples.isbox[x][y];
+	}
+	public static int[][] shiftRows(int[][] array, boolean encryption){
+		String x = encryption ? "left" : "right";
+		System.out.println("shiftRows to the " + x);
 		for(int i = 0; i < array.length; i++){
 			for(int j = 0; j < i; j++)
-				array [i] = shiftRowsHelper(array[i]);
+				array [i] = shiftRowsHelper(array[i], encryption);
 		}
 		return array;
 	}
-	private static int[] shiftRowsHelper(int[] array){
+	private static int[] shiftRowsHelper(int[] array, boolean encryption){
 		
 		int m = array.length;
-        int temp = array[0];
-        for (int k=0; k<m-1; k++){
-            array[k] = array[k+1];
+
+        if (encryption){
+        	int temp = array[0];
+	        for (int k=0; k<m-1; k++){
+	            array[k] = array[k+1];
+	        }
+	        array[m-1] = temp;
         }
-        array[m-1] = temp;
+        else{
+        	int temp = array[array.length-1];
+	        for (int k = m-1; k > 0; k--){
+	            array[k] = array[k-1];
+	        }
+	        array[0] = temp;
+        }
 		return array;
 	}
-	public static int[][] mixColumns(int[][] array){
-		System.out.println("mixColumns");
+	public static int[][] mixColumns(int[][] array, boolean encryption){
+		System.out.println("mixColumns, encryption = " + !encryption);
 		for(int j = 0; j< array[0].length; j++)
-			array = MixColumns.mixColumn2(array, j);
+			if (encryption)
+				array = MixColumns.mixColumn2(array, j);
+			else
+				array = MixColumns.invMixColumn2(array, j);
 		return array;
 	}
 	public static int[][] addRoundKey(int[][] key, int[][] array){
