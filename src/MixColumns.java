@@ -1,7 +1,16 @@
+/*
+ * Done by 	saleh alghusson, 	almto3@hotmail,com
+ * and
+ * 			ovais panjwani,		ovais.panjwani@utexas.edu
+ * 
+ * assignment is to implement AES-256 Encryption 
+ * MixColumns is a class that does MixColumns, provided by Dr. William Young from: https://www.cs.utexas.edu/~byoung/cs361/mixColumns-cheat-sheet
+ * 
+ * assignment specs:
+ * 		https://www.cs.utexas.edu/~byoung/cs361/assignment-aes-zhao.html
+ */
 
 public class MixColumns {
-
-
     ////////////////////////  the mixColumns Transformation ////////////////////////
     
     private static byte mul (int a, byte b) {
@@ -9,8 +18,8 @@ public class MixColumns {
 		int indb = (b < 0) ? (b + 256) : b;
 	
 		if ( (a != 0) && (b != 0) ) {
-		    int index = (Examples.LogTable[inda] + Examples.LogTable[indb]);
-		    byte val = (byte)(Examples.AlogTable[ index % 255 ] );
+		    int index = (Constants.LogTable[inda] + Constants.LogTable[indb]);
+		    byte val = (byte)(Constants.AlogTable[ index % 255 ] );
 		    return val;
 		}
 		else 

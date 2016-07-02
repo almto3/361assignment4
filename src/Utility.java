@@ -1,12 +1,21 @@
-
-
 /*
- * Utility class will be responsible for utility things
+ * Done by 	saleh alghusson, 	almto3@hotmail,com
+ * and
+ * 			ovais panjwani,		ovais.panjwani@utexas.edu
+ * 
+ * assignment is to implement AES-256 Encryption 
+ * Utility is the class responsible for array manipulation
+ * 
+ * assignment specs:
+ * 		https://www.cs.utexas.edu/~byoung/cs361/assignment-aes-zhao.html
  */
+
+import javax.xml.bind.DatatypeConverter;
+
 public class Utility{
 
 	public static int[][] xor(int[][] array, int[][] key){
-	
+		System.out.println("xor");
 		for(int i = 0; i < array.length; i++)
 			for(int j = 0; j< array[i].length; j++)
 				array[i][j] = array[i][j] ^ key[i][j];	
@@ -15,9 +24,7 @@ public class Utility{
 	
 	public static int[][] subBytes(int[][] array, boolean encryption){
 		System.out.println("subBytes, inverse = " + !encryption);
-		int x = 0;
-		int y = 0;
-		String s = "";
+		
 		for(int i = 0; i < array.length; i++)
 			for(int j = 0; j< array[i].length; j++)
 				array[i][j] = subBytesHelper(array[i][j], encryption);
@@ -42,8 +49,8 @@ public class Utility{
 			y = 0;
 		}	
 		if(encryption)
-			return Examples.sbox[x][y];
-		return Examples.isbox[x][y];
+			return Constants.sbox[x][y];
+		return Constants.isbox[x][y];
 	}
 	public static int[][] shiftRows(int[][] array, boolean encryption){
 		String x = encryption ? "left" : "right";
@@ -54,6 +61,7 @@ public class Utility{
 		}
 		return array;
 	}
+	/*	takes a 4 byte array, shifts it 1 byte to the left if encryption and to the right if not	*/ 
 	private static int[] shiftRowsHelper(int[] array, boolean encryption){
 		
 		int m = array.length;
@@ -83,12 +91,53 @@ public class Utility{
 				array = MixColumns.invMixColumn2(array, j);
 		return array;
 	}
-	public static int[][] addRoundKey(int[][] key, int[][] array){
-		System.out.println("addRoundKey");
-		return new int[5][5];
+	public static int[][] addRoundKey(int[][] array, int[][] key, int round){
+		System.out.println("addRoundKey (" + round + ")");
+		
+		for(int i = 0; i < array.length; i++) {
+			for(int j = 0; j < array[0].length; j++){
+				array[i][j] ^= key[i][j + (4*round)];
+			}
+		}
+		return array;
+	}
+	public static int[][] toArray(String line){
+		int array[][];
+		byte[] bytes = DatatypeConverter.parseHexBinary(line);
+		
+		if(line.length() == 64)
+			array = new int[4][8];
+		else 
+			array = new int[4][4];
+		
+		for (int i = 0; i < array.length; i++){
+			for (int j = 0; j < array[0].length; j++)
+				array[i][j] = bytes[i + 4*j] & 0xff;
+			
+		}
+		return array;
+	}
+	
+	public static String stringLine(int[][] array){
+		
+		StringBuilder sb = new StringBuilder();
+		array = Utility.transposeMatrix(array);
+		for(int i = 0; i < array.length; i++){
+			for(int j = 0; j< array[i].length; j++){
+				if(array[i][j] < 16)
+					sb.append("0");
+				sb.append(Integer.toHexString(array[i][j]).toUpperCase());
+			}
+		}
+		sb.append("\n");
+		return sb.toString();
+	}
+	public static void printLine(int[][] array){
+		
+		System.out.println(stringLine(array));
 	}
 	public static String stringArray(int[][] array){
-		System.out.println("int stringArray");
+		
 		StringBuilder sb = new StringBuilder();
 		
 		for(int i = 0; i < array.length; i++){
@@ -103,11 +152,11 @@ public class Utility{
 		return sb.toString();
 	}
 	public static void printArray(int[][] array){
-		System.out.println("int printArray");
+		
 		System.out.println(stringArray(array));
 	}
 	public static String stringArray(byte[][] array){
-		System.out.println("byte stringArray");
+		
 		StringBuilder sb = new StringBuilder();
 		
 		for(int i = 0; i < array.length; i++){
@@ -122,12 +171,12 @@ public class Utility{
 		return sb.toString();
 	}
 	public static void printArray(byte[][] array){
-		System.out.println("byte printArray");
+		
 		System.out.print(stringArray(array));
 	}
 	/*	create a random array with elements from 0 to 255	*/
 	public static int[][] randomArray(int x, int y){
-		System.out.println("randomArray");
+		
 		int[][] array = new int[x][y];
 		for(int i = 0; i< x; i++)
 			for (int j = 0; j< y; j++)
@@ -157,5 +206,12 @@ public class Utility{
 				intArray[i][j] = x;
 			}
 		return intArray;
+	}
+	public static int[][] transposeMatrix(int [][] m){
+		int[][] temp = new int[m[0].length][m.length];
+		for (int i = 0; i < m.length; i++)
+			for (int j = 0; j < m[0].length; j++)
+				temp[j][i] = m[i][j];
+		return temp;
 	}
 }
