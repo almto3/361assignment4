@@ -15,7 +15,7 @@ import javax.xml.bind.DatatypeConverter;
 public class Utility{
 
 	public static int[][] xor(int[][] array, int[][] key){
-		System.out.println("xor");
+		System.out.println("xor:");
 		for(int i = 0; i < array.length; i++)
 			for(int j = 0; j< array[i].length; j++)
 				array[i][j] = array[i][j] ^ key[i][j];	
@@ -23,7 +23,7 @@ public class Utility{
 	}
 	
 	public static int[][] subBytes(int[][] array, boolean encryption){
-		System.out.println("subBytes, inverse = " + !encryption);
+		System.out.println("subBytes, inverse = " + !encryption + ":");
 		
 		for(int i = 0; i < array.length; i++)
 			for(int j = 0; j< array[i].length; j++)
@@ -53,7 +53,7 @@ public class Utility{
 		return Constants.isbox[x][y];
 	}
 	public static int[][] shiftRows(int[][] array, boolean encryption){
-		String x = encryption ? "left" : "right";
+		String x = encryption ? "left:" : "right:";
 		System.out.println("shiftRows to the " + x);
 		for(int i = 0; i < array.length; i++){
 			for(int j = 0; j < i; j++)
@@ -83,7 +83,7 @@ public class Utility{
 		return array;
 	}
 	public static int[][] mixColumns(int[][] array, boolean encryption){
-		System.out.println("mixColumns, encryption = " + !encryption);
+		System.out.println("mixColumns, encryption = " + !encryption + ":");
 		for(int j = 0; j< array[0].length; j++)
 			if (encryption)
 				array = MixColumns.mixColumn2(array, j);
@@ -92,7 +92,7 @@ public class Utility{
 		return array;
 	}
 	public static int[][] addRoundKey(int[][] array, int[][] key, int round){
-		System.out.println("addRoundKey (" + round + ")");
+		System.out.println("addRoundKey (" + round + "):");
 		
 		for(int i = 0; i < array.length; i++) {
 			for(int j = 0; j < array[0].length; j++){
@@ -101,15 +101,25 @@ public class Utility{
 		}
 		return array;
 	}
-	public static int[][] toArray(String line){
+	public static int[][] toArray(String line, boolean input){
 		int array[][];
-		byte[] bytes = DatatypeConverter.parseHexBinary(line);
+		//leading zeros will be added to pad the input
+		while(true && input)
+			if (line.length() < 32)
+				line = "0"+line;
+			else
+				break;
 		
-		if(line.length() == 64)
+		byte[] bytes;
+		//all trailing chars will be discarded
+		if(! input){
+			bytes = DatatypeConverter.parseHexBinary(line.substring(0, 64));
 			array = new int[4][8];
-		else 
+		}
+		else{
+			bytes = DatatypeConverter.parseHexBinary(line.substring(0, 32));
 			array = new int[4][4];
-		
+		}
 		for (int i = 0; i < array.length; i++){
 			for (int j = 0; j < array[0].length; j++)
 				array[i][j] = bytes[i + 4*j] & 0xff;

@@ -7,7 +7,7 @@ def hex_number( count, padded=False ):
     # This currently generates a number of length count hex digits. 
     # Pad on the left with 0's if padded is True:
     x = random.randint( 0, 16**count )
-    hexdig = "%x" % x
+    hexdig = "%X" % x
     if padded:
         out = hexdig.zfill( count )  # pad with 0 if necessary
         return out

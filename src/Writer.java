@@ -19,8 +19,9 @@ public class Writer {
 		String ext = encrypt ? ".enc" : ".dec";
 		PrintWriter writer = new PrintWriter(path+ext, "UTF-8");
 		
-		writer.println(text);
+		writer.println(text.trim());
 		writer.close();
+		
+		System.out.println("Wrote result to " + path);
 	}
-
 }

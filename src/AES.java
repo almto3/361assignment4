@@ -31,13 +31,13 @@ public class AES {
 		String key = Reader.read(args[1], false);
 		String input = Reader.read(args[2], true);
 		StringBuilder sb = new StringBuilder();
-		int keyArray[][] = Utility.toArray(key.split("\n")[0]);
+		int keyArray[][] = Utility.toArray(key.split("\n")[0], false);
 		boolean enc = true;
 		int inputArray[][];
 		
 		if(args[0].equalsIgnoreCase("e")){
 			for(int i = 0; i < input.split("\n").length; i++){
-				inputArray = Utility.toArray(input.split("\n")[i]);
+				inputArray = Utility.toArray(input.split("\n")[i], true);
 				inputArray = roundsEncrypt(Constants.rounds_256, inputArray, keyArray);
 				sb.append( Utility.stringLine(inputArray));
 			}
@@ -45,7 +45,7 @@ public class AES {
 		else if(args[0].equalsIgnoreCase("d")){
 			enc = false;
 			for(int i = 0; i < input.split("\n").length; i++){
-				inputArray = Utility.toArray(input.split("\n")[i]);
+				inputArray = Utility.toArray(input.split("\n")[i], true);
 				inputArray = roundsDecrypt(Constants.rounds_256, inputArray, keyArray);
 				sb.append( Utility.stringLine(inputArray));
 			}
