@@ -1,27 +1,26 @@
-UTEID: mp34495; soa322;
-FIRSTNAME: Ovais; Saleh;
-LASTNAME: Panjwani; Alghusson;
-CSACCOUNT: mp34495; almto3;
-EMAIL: ovais.panjwani@utexas.edu; almto3@hotmail.com;
 
+## CS 361 Foundations of Security Assignment 4 (AES-128)
 
-[Program 4]
-[Description]
-There are 7 java files: 	In AES.java, we implemented the driver main method and some helpers to it.
-							In Utility.java, we implemented each of the steps of the encryption/decryption process. Each in a different method, with some having companion helper methods.
-							MixColumns.java, is pretty much the exact code provided to us by Dr. Young, with slight modifications.
-							Constants.java, has no code, but rather some constant arrays that we got from the internet and the project specs.
-							AddRoundKey.java, is responsible for key expansion.
-							Reader.java, reads from a file.
-							Writer.java, writes to a file.  
+### Description
+Group project by me and [@Ovais](https://github.com/theBrovais). For assignment details, please look [here]()
+
+** There are 7 java files: **
+* In AES.java, we implemented the driver main method and some helpers to it.
+* In Utility.java, we implemented each of the steps of the encryption/decryption process. Each in a different method, with some having companion helper methods.
+* MixColumns.java, is pretty much the exact code provided to us by Dr. Young, with slight modifications.
+* Constants.java, has no code, but rather some constant arrays that we got from the internet and the project specs.
+* AddRoundKey.java, is responsible for key expansion.
+* Reader.java, reads from a file.
+* Writer.java, writes to a file.
+
  We both worked together on this project, mostly on the same screen, however, we did work remotely for some parts, in those times, saleh worked on AES.java and Utility.java implementing most of it, while ovais finished working on and testing AddRoundKey.java.
  To compile the program, you need to use "javac *.java". To run our program, you need to use "java AES <e or d> <keyfile> <inputfile>"
 
-[Finish]
+### Finish
 We finished all of the requirements for this assignment. as far as I know, there are no bugs.
 
 
-[Test Case 1]
+### Test Case 1
 
 [Command line]
 e /Users/almto3/Github/361assignment4/keyFile /Users/almto3/Github/361assignment4/inputFile1
@@ -33,7 +32,7 @@ inputFile1
 inputFile1.enc
 
 
-[Test Case 2]
+### Test Case 2
 
 [Command line]
 d /Users/almto3/Github/361assignment4/keyFile /Users/almto3/Github/361assignment4/inputFile1.enc
@@ -45,10 +44,10 @@ inputFile1.enc
 inputFile1.enc.dec
 
 
-[Test Case 3]
+### Test Case 3
 
 [Command line]
-e /Users/almto3/Github/361assignment4/keyFile /Users/almto3/Github/361assignment4/inputFile2
+e keyFile inputFile2
 [Timing Information]
 72 milsec
 [Input Filenames]
@@ -57,10 +56,10 @@ inputFile2
 inputFie2.enc
 
 
-[Test Case 4]
+### Test Case 4
 
 [Command line]
-d /Users/almto3/Github/361assignment4/keyFile /Users/almto3/Github/361assignment4/inputFile2.enc
+d keyFile inputFile2.enc
 [Timing Information]
 62 milsec
 [Input Filenames]
@@ -69,10 +68,10 @@ inputFile2.enc
 inputFile2.enc.dec
 
 
-[Test Case 5]
+### Test Case 5
 
 [Command line]
-e /Users/almto3/Github/361assignment4/keyFile /Users/almto3/Github/361assignment4/inputFile3
+e keyFile inputFile3
 [Timing Information]
 63 milsec
 [Input Filenames]
@@ -81,10 +80,10 @@ inputFile3
 inputFie3.enc
 
 
-[Test Case 6]
+### Test Case 6
 
 [Command line]
-d /Users/almto3/Github/361assignment4/keyFile /Users/almto3/Github/361assignment4/inputFile3.enc
+d keyFile inputFile3.enc
 [Timing Information]
 56 milsec
 [Input Filenames]
