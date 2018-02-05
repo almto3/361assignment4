@@ -13,7 +13,14 @@ Java project by me and [@Ovais](https://github.com/theBrovais). Done for CS f361
 * *Writer.java*, writes to a file.
 
  We both worked together on this project, mostly on the same screen, however, we did work remotely for some parts, in those times, saleh worked on AES.java and Utility.java implementing most of it, while ovais finished working on and testing AddRoundKey.java.
- To compile the program, you need to use "javac *.java". To run our program, you need to use "java AES <e or d> <keyfile> <inputfile>"
+ To compile the program, you need to use 
+ ```
+ javac *.java
+ ```
+ To run the program, you need to use 
+ ```
+ java AES <e or d> <keyfile> <inputfile>
+ ```
 
 ### Finish
 We finished all of the requirements for this assignment. as far as I know, there are no bugs.
