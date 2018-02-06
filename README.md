@@ -25,6 +25,7 @@ Java project by me and [@Ovais](https://github.com/theBrovais). Done for CS f361
 ### Finish
 We finished all of the requirements for this assignment. as far as I know, there are no bugs.
 
+## Test Cases
 ### Test Case 1
 * **Command line** 
 ```
